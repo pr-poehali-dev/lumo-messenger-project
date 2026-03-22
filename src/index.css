@@ -4,89 +4,62 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    --background: 222 30% 7%;
+    --foreground: 210 40% 96%;
 
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card: 222 28% 10%;
+    --card-foreground: 210 40% 96%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover: 222 28% 10%;
+    --popover-foreground: 210 40% 96%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    --primary: 270 80% 65%;
+    --primary-foreground: 0 0% 100%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 222 25% 15%;
+    --secondary-foreground: 210 40% 96%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --muted: 222 25% 14%;
+    --muted-foreground: 215 20% 55%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    --accent: 290 70% 60%;
+    --accent-foreground: 0 0% 100%;
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive: 0 72% 55%;
+    --destructive-foreground: 0 0% 100%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    --border: 222 25% 18%;
+    --input: 222 25% 14%;
+    --ring: 270 80% 65%;
 
-    --radius: 0.5rem;
+    --radius: 0.75rem;
 
-    --sidebar-background: 0 0% 98%;
-
-    --sidebar-foreground: 240 5.3% 26.1%;
-
-    --sidebar-primary: 240 5.9% 10%;
-
-    --sidebar-primary-foreground: 0 0% 98%;
-
-    --sidebar-accent: 240 4.8% 95.9%;
-
-    --sidebar-accent-foreground: 240 5.9% 10%;
-
-    --sidebar-border: 220 13% 91%;
-
-    --sidebar-ring: 217.2 91.2% 59.8%;
-  }
-
-  .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
-
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
-
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-background: 222 30% 8%;
+    --sidebar-foreground: 210 40% 85%;
+    --sidebar-primary: 270 80% 65%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --sidebar-accent: 222 25% 14%;
+    --sidebar-accent-foreground: 210 40% 96%;
+    --sidebar-border: 222 25% 16%;
+    --sidebar-ring: 270 80% 65%;
+
+    /* Lumo custom vars */
+    --lumo-gradient: linear-gradient(
+      135deg,
+      #7c3aed 0%,
+      #a855f7 40%,
+      #ec4899 100%
+    );
+    --lumo-gradient-soft: linear-gradient(
+      135deg,
+      rgba(124, 58, 237, 0.15) 0%,
+      rgba(168, 85, 247, 0.1) 50%,
+      rgba(236, 72, 153, 0.15) 100%
+    );
+    --lumo-glow: 0 0 30px rgba(168, 85, 247, 0.3);
+    --lumo-glow-strong: 0 0 60px rgba(168, 85, 247, 0.5);
+    --lumo-surface: rgba(255, 255, 255, 0.04);
+    --lumo-surface-hover: rgba(255, 255, 255, 0.07);
   }
 }
 
@@ -97,5 +70,252 @@
 
   body {
     @apply bg-background text-foreground;
+    font-family: "Golos Text", sans-serif;
+    background-color: #0d1117;
+  }
+
+  ::-webkit-scrollbar {
+    width: 4px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: rgba(168, 85, 247, 0.3);
+    border-radius: 4px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgba(168, 85, 247, 0.6);
+  }
+}
+
+@layer components {
+  .lumo-gradient-text {
+    background: var(--lumo-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .lumo-btn-primary {
+    background: var(--lumo-gradient);
+    color: white;
+    border: none;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+  }
+
+  .lumo-btn-primary::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(255, 255, 255, 0.1);
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+
+  .lumo-btn-primary:hover::before {
+    opacity: 1;
+  }
+
+  .lumo-btn-primary:hover {
+    box-shadow: var(--lumo-glow);
+    transform: translateY(-1px);
+  }
+
+  .lumo-card {
+    background: var(--lumo-surface);
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    backdrop-filter: blur(10px);
+    transition: all 0.2s ease;
+  }
+
+  .lumo-card:hover {
+    background: var(--lumo-surface-hover);
+    border-color: rgba(168, 85, 247, 0.3);
+  }
+
+  .lumo-input {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: white;
+    transition: all 0.2s ease;
+  }
+
+  .lumo-input:focus {
+    border-color: rgba(168, 85, 247, 0.6);
+    box-shadow: 0 0 0 3px rgba(168, 85, 247, 0.15);
+    outline: none;
+  }
+
+  .lumo-input::placeholder {
+    color: rgba(255, 255, 255, 0.3);
+  }
+
+  .lumo-tag {
+    background: var(--lumo-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-weight: 600;
+  }
+
+  .lumo-sidebar-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 14px;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    color: rgba(255, 255, 255, 0.6);
+  }
+
+  .lumo-sidebar-item:hover {
+    background: var(--lumo-surface-hover);
+    color: white;
+  }
+
+  .lumo-sidebar-item.active {
+    background: var(--lumo-gradient-soft);
+    color: white;
+    border: 1px solid rgba(168, 85, 247, 0.3);
+  }
+
+  .lumo-message-bubble {
+    max-width: 70%;
+    padding: 10px 14px;
+    border-radius: 18px;
+    line-height: 1.5;
+    font-size: 14px;
+  }
+
+  .lumo-message-bubble.mine {
+    background: var(--lumo-gradient);
+    color: white;
+    border-bottom-right-radius: 4px;
+    margin-left: auto;
+  }
+
+  .lumo-message-bubble.other {
+    background: rgba(255, 255, 255, 0.07);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    color: rgba(255, 255, 255, 0.9);
+    border-bottom-left-radius: 4px;
+  }
+
+  .lumo-avatar {
+    border-radius: 50%;
+    background: var(--lumo-gradient);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+
+  .lumo-online-dot {
+    width: 10px;
+    height: 10px;
+    background: #22c55e;
+    border-radius: 50%;
+    border: 2px solid #0d1117;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    box-shadow: 0 0 8px rgba(34, 197, 94, 0.5);
+  }
+
+  .lumo-noise {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.03;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    background-size: 150px;
+  }
+
+  .lumo-glow-orb {
+    position: fixed;
+    border-radius: 50%;
+    filter: blur(80px);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .animate-fade-in {
+    animation: fadeIn 0.3s ease forwards;
+  }
+
+  .animate-slide-up {
+    animation: slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  .animate-scale-in {
+    animation: scaleIn 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes slideUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes scaleIn {
+    from {
+      opacity: 0;
+      transform: scale(0.95);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  @keyframes pulse-glow {
+    0%,
+    100% {
+      box-shadow: 0 0 20px rgba(168, 85, 247, 0.3);
+    }
+    50% {
+      box-shadow: 0 0 40px rgba(168, 85, 247, 0.6);
+    }
+  }
+
+  .lumo-pulse {
+    animation: pulse-glow 2s ease-in-out infinite;
+  }
+
+  .lumo-role-admin {
+    color: #f59e0b;
+    font-weight: 600;
+    font-size: 11px;
+  }
+  .lumo-role-moder {
+    color: #22c55e;
+    font-weight: 600;
+    font-size: 11px;
+  }
+  .lumo-role-premium {
+    color: #a855f7;
+    font-weight: 600;
+    font-size: 11px;
   }
 }
