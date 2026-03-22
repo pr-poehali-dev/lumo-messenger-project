@@ -11,14 +11,27 @@ export interface User {
   avatar?: string;
   description?: string;
   banned?: boolean;
+  theme?: string;
+}
+
+export interface Reaction {
+  emoji: string;
+  count: number;
+  mine: boolean;
 }
 
 export interface Message {
   id: number;
   text: string;
   senderId: number;
+  senderNickname?: string;
+  senderTag?: string;
+  senderAvatar?: string;
+  senderRole?: string;
   timestamp: string;
   chatId: number;
+  reactions?: Reaction[];
+  isPinned?: boolean;
 }
 
 export interface Chat {
@@ -52,33 +65,7 @@ export const THEMES = [
   { id: 'midnight', name: 'Midnight Rose', gradient: 'linear-gradient(135deg, #be185d, #7c3aed, #1d4ed8)', preview: ['#be185d', '#7c3aed', '#1d4ed8'] },
 ];
 
-export const MOCK_CHATS: Chat[] = [
-  { id: 1, name: 'Алекс', tag: '#alexdev', lastMessage: 'Привет! Как дела?', time: '14:32', unread: 3, online: true },
-  { id: 2, name: 'Мария', tag: '#mariart', lastMessage: 'Отправила тебе файл', time: '13:15', unread: 0, online: true },
-  { id: 3, name: 'Дмитрий', tag: '#dmitry99', lastMessage: 'Ок, увидимся завтра', time: '11:44', unread: 1, online: false },
-  { id: 4, name: 'Катя', tag: '#katya_k', lastMessage: '😂😂😂', time: 'вчера', unread: 0, online: false },
-  { id: 5, name: 'Никита', tag: '#nik_tech', lastMessage: 'Посмотри это видео', time: 'вчера', unread: 7, online: true },
-];
 
-export const MOCK_GROUPS: Group[] = [
-  { id: 1, name: 'Dev Community', tag: '#devcom', members: 1284, lastMessage: 'alexdev: Новый релиз React 20!', time: '15:01', description: 'Сообщество разработчиков' },
-  { id: 2, name: 'Дизайн & UI', tag: '#design_ui', members: 892, lastMessage: 'mariart: Крутые референсы', time: '14:22', description: 'Про дизайн и интерфейсы' },
-  { id: 3, name: 'Lumo Official', tag: '#lumo_hq', members: 45672, lastMessage: 'Добро пожаловать в Lumo!', time: '09:00', description: 'Официальный канал Lumo' },
-];
-
-export const MOCK_MESSAGES: Message[] = [
-  { id: 1, text: 'Привет! Как дела?', senderId: 2, timestamp: '14:30', chatId: 1 },
-  { id: 2, text: 'Отлично! Работаю над новым проектом', senderId: 1, timestamp: '14:31', chatId: 1 },
-  { id: 3, text: 'Звучит интересно! Что за проект?', senderId: 2, timestamp: '14:31', chatId: 1 },
-  { id: 4, text: 'Мессенджер с тегами вместо номеров 😄', senderId: 1, timestamp: '14:32', chatId: 1 },
-  { id: 5, text: 'О, это Lumo! Крутая идея 🚀', senderId: 2, timestamp: '14:32', chatId: 1 },
-];
-
-export const MOCK_CONTACTS: User[] = [
-  { id: 2, nickname: 'Алекс', tag: '#alexdev', role: 'premium', description: 'Full-stack разработчик' },
-  { id: 3, nickname: 'Мария', tag: '#mariart', role: 'user', description: 'UI/UX дизайнер' },
-  { id: 4, nickname: 'Дмитрий', tag: '#dmitry99', role: 'moder', description: 'Модератор' },
-];
 
 export function generateCaptcha(): string {
   const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';

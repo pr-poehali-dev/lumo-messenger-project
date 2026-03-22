@@ -1,7 +1,28 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import Icon from '@/components/ui/icon';
 import { User, AppTab, SettingsTab, UserRole, THEMES } from '@/types';
 import { RoleBadge, ChatsTab, GroupsTab, SearchTab, ContactsTab } from '@/components/ChatComponents';
+import { api } from '@/api';
+
+// Применить тему через CSS-переменные
+function applyTheme(themeId: string) {
+  const theme = THEMES.find(t => t.id === themeId);
+  if (!theme) return;
+  const [c1, c2, c3] = theme.preview;
+  const root = document.documentElement;
+  root.style.setProperty('--lumo-gradient', `linear-gradient(135deg, ${c1} 0%, ${c2} 40%, ${c3} 100%)`);
+  root.style.setProperty('--lumo-gradient-soft', `linear-gradient(135deg, ${c1}26 0%, ${c2}1a 50%, ${c3}26 100%)`);
+  root.style.setProperty('--lumo-glow', `0 0 30px ${c2}4d`);
+  root.style.setProperty('--lumo-glow-strong', `0 0 60px ${c2}80`);
+  // primary color
+  const hex = c2.replace('#', '');
+  const r = parseInt(hex.slice(0,2), 16);
+  const g = parseInt(hex.slice(2,4), 16);
+  const b = parseInt(hex.slice(4,6), 16);
+  const h = Math.round(Math.atan2(1.732 * (g - b), 2 * r - g - b) * 180 / Math.PI + 360) % 360;
+  root.style.setProperty('--primary', `${h} 70% 60%`);
+  root.style.setProperty('--ring', `${h} 70% 60%`);
+}
 
 // ─── SETTINGS TAB ───────────────────────────────────────────────────────────────
 export function SettingsTab({ currentUser, onUpdateUser, onLogout, theme, onThemeChange }: {
@@ -23,8 +44,9 @@ export function SettingsTab({ currentUser, onUpdateUser, onLogout, theme, onThem
     { id: 'premium' as SettingsTab, label: 'Premium', icon: 'Star' },
   ];
 
-  const handleSave = () => {
-    onUpdateUser({ ...currentUser, nickname, description });
+  const handleSave = async () => {
+    const res = await api.auth.updateProfile({ nickname, description });
+    if (res.ok) onUpdateUser(res.data);
     setSaved(true);
     setTimeout(() => setSaved(false), 2000);
   };
@@ -267,8 +289,18 @@ export function MainApp({ currentUser, onUpdateUser, onLogout }: {
   onLogout: () => void;
 }) {
   const [activeTab, setActiveTab] = useState<AppTab>('chats');
-  const [theme, setTheme] = useState('violet');
+  const [theme, setTheme] = useState(currentUser.theme || 'violet');
   const [showAdmin, setShowAdmin] = useState(false);
+
+  // Применяем тему при монтировании
+  useEffect(() => { applyTheme(currentUser.theme || 'violet'); }, []);
+
+  const handleThemeChange = async (id: string) => {
+    setTheme(id);
+    applyTheme(id);
+    await api.auth.updateProfile({ theme: id });
+    onUpdateUser({ ...currentUser, theme: id });
+  };
 
   const navItems: { id: AppTab; icon: string; label: string }[] = [
     { id: 'chats', icon: 'MessageCircle', label: 'Чаты' },
@@ -334,15 +366,15 @@ export function MainApp({ currentUser, onUpdateUser, onLogout }: {
         <div className="flex-1 overflow-hidden">
           {activeTab === 'chats' && <ChatsTab currentUser={currentUser} />}
           {activeTab === 'groups' && <GroupsTab currentUser={currentUser} />}
-          {activeTab === 'search' && <SearchTab />}
-          {activeTab === 'contacts' && <ContactsTab />}
+          {activeTab === 'search' && <SearchTab currentUser={currentUser} />}
+          {activeTab === 'contacts' && <ContactsTab currentUser={currentUser} />}
           {activeTab === 'settings' && (
             <SettingsTab
               currentUser={currentUser}
               onUpdateUser={onUpdateUser}
               onLogout={onLogout}
               theme={theme}
-              onThemeChange={setTheme}
+              onThemeChange={handleThemeChange}
             />
           )}
         </div>

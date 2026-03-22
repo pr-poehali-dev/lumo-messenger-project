@@ -1,0 +1,12 @@
+{
+  "tests": [
+    {
+      "name": "Get messages no auth",
+      "method": "GET",
+      "path": "/",
+      "expectedStatus": 401,
+      "expectedBody": "string",
+      "bodyMatcher": "partial"
+    }
+  ]
+}

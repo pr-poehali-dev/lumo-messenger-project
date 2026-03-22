@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import Icon from '@/components/ui/icon';
 import { User, generateCaptcha } from '@/types';
+import { api } from '@/api';
 
 // ─── AUTH SCREEN ────────────────────────────────────────────────────────────────
 export function AuthScreen({ onLogin, onGoRegister }: { onLogin: (user: User) => void; onGoRegister: () => void }) {
@@ -9,19 +10,17 @@ export function AuthScreen({ onLogin, onGoRegister }: { onLogin: (user: User) =>
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
-  const handleLogin = () => {
+  const handleLogin = async () => {
     if (!tag || !password) { setError('Заполни все поля'); return; }
     setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
-      if (tag === '#admin' && password === 'admin') {
-        onLogin({ id: 1, nickname: 'Администратор', tag: '#admin', role: 'admin', description: 'Главный администратор Lumo' });
-      } else if (tag.startsWith('#') && password.length >= 4) {
-        onLogin({ id: 1, nickname: tag.replace('#', ''), tag, role: 'user', description: '' });
-      } else {
-        setError('Неверный тег или пароль');
-      }
-    }, 800);
+    const res = await api.auth.login(tag, password);
+    setLoading(false);
+    if (res.ok) {
+      localStorage.setItem('lumo_session', res.data.session_id);
+      onLogin(res.data.user);
+    } else {
+      setError(res.data?.error || 'Неверный тег или пароль');
+    }
   };
 
   return (
@@ -112,16 +111,20 @@ export function RegisterScreen({ onRegister, onGoLogin }: { onRegister: (user: U
     setError(''); setStep(2);
   };
 
-  const handleRegister = () => {
+  const handleRegister = async () => {
     if (!password || !confirm) { setError('Введи пароль'); return; }
     if (password.length < 6) { setError('Пароль минимум 6 символов'); return; }
     if (password !== confirm) { setError('Пароли не совпадают'); return; }
     if (captchaInput.toUpperCase() !== captcha) { setError('Неверная капча'); return; }
     setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
-      onRegister({ id: Date.now(), nickname, tag: '#' + tag, role: 'user', description: '' });
-    }, 800);
+    const res = await api.auth.register(nickname, tag, password);
+    setLoading(false);
+    if (res.ok) {
+      localStorage.setItem('lumo_session', res.data.session_id);
+      onRegister(res.data.user);
+    } else {
+      setError(res.data?.error || 'Ошибка регистрации');
+    }
   };
 
   return (
